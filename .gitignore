@@ -1,0 +1,11 @@
+venv
+.idea
+*.sqlite
+
+
+
+# Pycache
+
+src/__pycache__
+src/routes/__pycache__
+src/routes/schemas/__pycache__
