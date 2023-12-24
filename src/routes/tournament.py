@@ -50,6 +50,10 @@ def get_id_tournament(tournament: Tournament, db: Session = Depends(get_db)):
 def eliminate(elPlayer: ElPlayer, db: Session = Depends(get_db)):
     points_func = crud.set_points(elPlayer.points, elPlayer.id, db=db)
     place_func = crud.set_place(elPlayer.place, elPlayer.tournament, elPlayer.id, db=db)
+    return {
+        "place": place_func,
+        "points": points_func
+    }
 
 
 @router.post("/tournament/get_player_tournaments")
