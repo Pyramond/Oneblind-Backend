@@ -187,7 +187,6 @@ def set_points(points, id, db: Session):
 
 def set_place(place, Tid, Pid, db: Session):
     db_player = db.query(models.TournamentPlayer).filter((models.TournamentPlayer.Pid == Pid) & (models.TournamentPlayer.Tid == Tid)).first()
-    print(db_player.place)
     if db_player:
         db_player.place = place
         db.commit()
