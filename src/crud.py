@@ -100,7 +100,6 @@ def create_tournament(tournament, db: Session):
 
 
 def get_all_tournaments(state, db: Session):
-
     result = None
     if state == "all":
         result = db.query(models.Tournament).all()
@@ -186,7 +185,8 @@ def set_points(points, id, db: Session):
 
 
 def set_place(place, Tid, Pid, db: Session):
-    db_player = db.query(models.TournamentPlayer).filter((models.TournamentPlayer.Pid == Pid) & (models.TournamentPlayer.Tid == Tid)).first()
+    db_player = db.query(models.TournamentPlayer).filter(
+        (models.TournamentPlayer.Pid == Pid) & (models.TournamentPlayer.Tid == Tid)).first()
     if db_player:
         db_player.place = place
         db.commit()
@@ -197,13 +197,15 @@ def set_place(place, Tid, Pid, db: Session):
 
 
 def get_player_tournaments(id, db: Session):
-    db_player = db.query(models.TournamentPlayer.Tid, models.TournamentPlayer.place).filter(models.TournamentPlayer.Pid == id).all()
+    db_player = db.query(models.TournamentPlayer.Tid, models.TournamentPlayer.place).filter(
+        models.TournamentPlayer.Pid == id).all()
 
     if db_player:
         data = []
 
         for elt in db_player:
-            db_tournament = db.query(models.Tournament.name, models.Tournament.date).filter(models.Tournament.id == elt[0]).all()
+            db_tournament = db.query(models.Tournament.name, models.Tournament.date).filter(
+                models.Tournament.id == elt[0]).all()
             data.append({
                 "id": elt[0],
                 "place": elt[1],
@@ -218,11 +220,21 @@ def get_player_tournaments(id, db: Session):
 
 
 def force_delete_tournament(id, db: Session):
-    tournament = db.query(models.Tournament).filter(models.Tournament.id == id).first()
+    tournamentPlayers = db.query(models.TournamentPlayer).filter(models.TournamentPlayer.Tid == id).all()
+    if tournamentPlayers:
 
-    if tournament:
-        db.delete(tournament)
-        db.commit()
-        return {"msg": "Tournament successfully deleted"}
+        for player in tournamentPlayers:
+            db.delete(player)
+            db.commit()
+
+        tournament = db.query(models.Tournament).filter(models.Tournament.id == id).first()
+
+        if tournament:
+            db.delete(tournament)
+            db.commit()
+
+            return {"msg": "Tournament successfully deleted"}
+        else:
+            return {"msg": "Tournament Not Found"}
     else:
-        return {"msg": "Tournament Not Found"}
+        return {"msg": "Tournament players not found"}
