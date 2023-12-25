@@ -136,7 +136,7 @@ def get_tournament_players(id, db: Session):
         for player in tournament.players:
             players.append({
                 "name": player.name,
-                "id": player.id
+                "id": player.Pid
             })
 
         return players
