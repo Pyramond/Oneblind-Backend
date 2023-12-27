@@ -1,7 +1,7 @@
 venv
 .idea
 *.sqlite
-
+*.db
 
 
 # Pycache
@@ -9,3 +9,4 @@ venv
 src/__pycache__
 src/routes/__pycache__
 src/routes/schemas/__pycache__
+
