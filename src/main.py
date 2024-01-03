@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from routes import players, blind_models, tournament
 import models
 from database import engine
@@ -7,6 +8,8 @@ from database import engine
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # middleware CORS
 app.add_middleware(
