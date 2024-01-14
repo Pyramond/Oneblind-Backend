@@ -3,6 +3,8 @@ from database import engine, SessionLocal
 import crud
 from sqlalchemy.orm import Session
 from routes.schemas.players_schema import NewPlayer, Player, PlayerAvatar
+from utils.list_avatar import list_avatar
+
 
 router = APIRouter()
 
@@ -38,3 +40,8 @@ def delete_player(player: Player, db: Session = Depends(get_db)):
 @router.post("/player/avatar/update")
 def update_avatar(player: PlayerAvatar, db: Session = Depends(get_db)):
     return crud.change_avatar(player.id, player.avatar, db=db)
+
+
+@router.get("/player/avatar/getAll")
+def get_all_avatar():
+    return list_avatar()
