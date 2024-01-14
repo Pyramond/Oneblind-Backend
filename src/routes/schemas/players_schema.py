@@ -8,4 +8,8 @@ class NewPlayer(BaseModel):
 
 class Player(BaseModel):
     id: int
-    
+
+
+class PlayerAvatar(BaseModel):
+    id: int
+    avatar: int

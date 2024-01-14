@@ -10,6 +10,7 @@ class Players(Base):
     name = Column(String)
     date = Column(Integer)
     points = Column(Integer)
+    avatar = Column(Integer)
 
 
 class BlindModel(Base):

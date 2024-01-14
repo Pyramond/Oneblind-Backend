@@ -8,11 +8,21 @@ def get_players(db: Session):
 
 
 def add_player(name, date, db: Session):
-    db_user = models.Players(name=name, date=date, points=0)
+    db_user = models.Players(name=name, date=date, points=0, avatar=1)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
     return db_user
+
+def change_avatar(id, avatar, db: Session):
+    player = db.query(models.Players).filter(models.Players.id == id).first()
+    if player:
+        player.avatar = avatar
+        db.commit()
+        db.refresh(player)
+        return {"msg": "Avatar updated successfully"}
+    else:
+        return {"msg": "Player not found"}
 
 
 def remove_player(id, db: Session):
