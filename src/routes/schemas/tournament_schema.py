@@ -19,6 +19,7 @@ class NewTournament(BaseModel):
     initialChips: int
     name: str
     players: list[Player]
+    points: bool
 
 
 class Tournament(BaseModel):

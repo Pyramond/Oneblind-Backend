@@ -44,6 +44,7 @@ class Tournament(Base):
     blindId = Column(Integer)
     initialChip = Column(Integer)
     state = Column(String)
+    points = Column(Integer)
 
     players = relationship("TournamentPlayer", back_populates="tournament_owner")
 

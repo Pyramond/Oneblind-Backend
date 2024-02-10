@@ -14,6 +14,7 @@ def add_player(name, date, db: Session):
     db.refresh(db_user)
     return db_user
 
+
 def change_avatar(id, avatar, db: Session):
     player = db.query(models.Players).filter(models.Players.id == id).first()
     if player:
@@ -94,8 +95,13 @@ def get_id_model(id, db: Session):
 
 # Tournament
 def create_tournament(tournament, db: Session):
+
+    points = 0
+    if tournament.points: points = 1
+
     db_tournament = models.Tournament(name=tournament.name, date=tournament.date, initialChip=tournament.initialChips,
-                                      state="current", blindName=tournament.blind.name, blindId=tournament.blind.id)
+                                      state="current", blindName=tournament.blind.name, blindId=tournament.blind.id,
+                                      points=points)
     db.add(db_tournament)
     db.commit()
     db.refresh(db_tournament)
@@ -176,7 +182,8 @@ def get_id_tournament(id, db: Session):
             "date": db_tournament.date,
             "blindName": db_tournament.blindName,
             "blindId": db_tournament.blindId,
-            "initialChip": db_tournament.initialChip
+            "initialChip": db_tournament.initialChip,
+            "points": db_tournament.points
         }
     else:
         return {"msg": "Tournament Not Found"}
