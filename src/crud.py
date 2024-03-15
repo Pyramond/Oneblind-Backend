@@ -8,7 +8,7 @@ def get_players(db: Session):
 
 
 def add_player(name, date, db: Session):
-    db_user = models.Players(name=name, date=date, points=0, avatar=1)
+    db_user = models.Players(name=name, date=date, points=0, avatar=0)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
