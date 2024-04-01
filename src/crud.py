@@ -95,7 +95,6 @@ def get_id_model(id, db: Session):
 
 # Tournament
 def create_tournament(tournament, db: Session):
-
     points = 0
     if tournament.points: points = 1
 
@@ -255,3 +254,54 @@ def force_delete_tournament(id, db: Session):
             return {"msg": "Tournament Not Found"}
     else:
         return {"msg": "Tournament players not found"}
+
+
+def add_player_tournament(Pid, Tid, db: Session):
+
+    player = db.query(models.Players).filter(models.Players.id == Pid).first()
+    if not player:
+        return {"msg": "This player does not exist"}
+
+    tournament = db.query(models.Tournament).filter(models.Tournament.id == Tid).first()
+
+    if not tournament:
+        return {"msg": "Tournament not found"}
+    elif tournament.state == "old":
+        return {"msg": "This tournament is already finished"}
+
+    isAlreadyAdded = db.query(models.TournamentPlayer).filter((models.TournamentPlayer.Tid == Tid) & (models.TournamentPlayer.Pid == Pid)).first()
+
+    if isAlreadyAdded:
+        return {"msg": "This player is already added to this tournament"}
+
+
+    db_playerTournament = models.TournamentPlayer(Tid=Tid, Pid=Pid, name=player.name, place=0)
+    db.add(db_playerTournament)
+    db.commit()
+    db.refresh(db_playerTournament)
+    return {"msg": "Player successfully added to this tournament"}
+
+
+def remove_player_tournament(Pid, Tid, db: Session):
+
+    player = db.query(models.Players).filter(models.Players.id == Pid).first()
+    if not player:
+        return {"msg": "This player does not exist"}
+
+    tournament = db.query(models.Tournament).filter(models.Tournament.id == Tid).first()
+
+    if not tournament:
+        return {"msg": "Tournament not found"}
+    elif tournament.state == "old":
+        return {"msg": "This tournament is already finished"}
+
+    isAlreadyAdded = db.query(models.TournamentPlayer).filter((models.TournamentPlayer.Tid == Tid) & (models.TournamentPlayer.Pid == Pid)).first()
+
+    if not isAlreadyAdded:
+        return {"msg": "This player is not in this tournament"}
+
+
+    db.delete(isAlreadyAdded)
+    db.commit()
+
+    return {"msg": "Player successfully removed to this tournament"}

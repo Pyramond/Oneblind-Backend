@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from database import engine, SessionLocal
 import crud
 from sqlalchemy.orm import Session
-from routes.schemas.tournament_schema import NewTournament, Tournament, ElPlayer
+from routes.schemas.tournament_schema import NewTournament, Tournament, ElPlayer, NewTournamentPlayer
 
 
 router = APIRouter()
@@ -64,3 +64,13 @@ def get_player_tournaments(player: Tournament, db: Session = Depends(get_db)):
 @router.post("/tournament/delete/force")
 def force_delete_tournament(tournament: Tournament, db: Session = Depends(get_db)):
     return crud.force_delete_tournament(tournament.id, db=db)
+
+
+@router.post("/tournament/add/player")
+def add_player_tournament(player: NewTournamentPlayer, db: Session = Depends(get_db)):
+    return crud.add_player_tournament(player.Pid, player.Tid, db=db)
+
+
+@router.post("/tournament/remove/player")
+def remove_player_tournament(player: NewTournamentPlayer, db: Session = Depends(get_db)):
+    return crud.remove_player_tournament(player.Pid, player.Tid, db=db)
