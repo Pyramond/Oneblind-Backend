@@ -35,3 +35,8 @@ class ElPlayer(BaseModel):
 
 class TournamentPlayer(BaseModel):
     id: int
+
+
+class NewTournamentPlayer(BaseModel):
+    Pid: int
+    Tid: int
