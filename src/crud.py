@@ -8,7 +8,7 @@ def get_players(db: Session):
 
 
 def add_player(name, date, db: Session):
-    db_user = models.Players(name=name, date=date, points=0, avatar=0)
+    db_user = models.Players(name=name, date=date, points=0, avatar=-1, avatarColor="108cd0")
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
@@ -305,3 +305,16 @@ def remove_player_tournament(Pid, Tid, db: Session):
     db.commit()
 
     return {"msg": "Player successfully removed to this tournament"}
+
+
+def change_avatar_color(id, color, db: Session):
+
+    player = db.query(models.Players).filter(models.Players.id == id).first()
+
+    if not player:
+        return {"msg": "Player not found"}
+
+    player.avatarColor = color
+    db.commit()
+    db.refresh(player)
+    return {"msg": "Color successfully updated"}

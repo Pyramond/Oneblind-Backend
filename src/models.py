@@ -11,6 +11,7 @@ class Players(Base):
     date = Column(Integer)
     points = Column(Integer)
     avatar = Column(Integer)
+    avatarColor = Column(String)
 
 
 class BlindModel(Base):
