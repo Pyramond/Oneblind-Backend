@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 import db.models as models
+from fastapi import HTTPException
 
 
 def create_blind_model(name, steps, db: Session):
@@ -31,7 +32,7 @@ def delete_model(id, db: Session):
         db.commit()
         return {"msg": "Model deleted successfully"}
     else:
-        return {"msg": "Model not found"}
+        raise HTTPException(status_code=404, detail="Model not found")
 
 
 def get_id_model(id, db: Session):
@@ -51,5 +52,5 @@ def get_id_model(id, db: Session):
             "steps": steps
         }
     else:
-        return {"msg": "Model not found"}
+        raise HTTPException(status_code=404, detail="Model not found")
 

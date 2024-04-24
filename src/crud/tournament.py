@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 import db.models as models
+from fastapi import HTTPException
 
 
 def create_tournament(tournament, db: Session):
@@ -46,7 +47,7 @@ def get_all_tournaments(state, db: Session):
             })
         return tournaments
     elif result is None:
-        return {"msg": "Error: Incorrect state"}
+        raise HTTPException(status_code=400, detail="Incorrect state")
 
 
 def get_tournament_players(id, db: Session):
@@ -63,7 +64,7 @@ def get_tournament_players(id, db: Session):
 
         return players
     else:
-        return {"msg": "Tournament Not Found"}
+        raise HTTPException(status_code=404, detail="Tournament not found")
 
 
 def delete_tournament(id, db: Session):
@@ -76,7 +77,7 @@ def delete_tournament(id, db: Session):
 
         return {"msg": "Tournament deleted successfully"}
     else:
-        return {"msg": "Tournament Not Found"}
+        raise HTTPException(status_code=404, detail="Tournament not found")
 
 
 def get_id_tournament(id, db: Session):
@@ -93,7 +94,7 @@ def get_id_tournament(id, db: Session):
             "points": db_tournament.points
         }
     else:
-        return {"msg": "Tournament Not Found"}
+        raise HTTPException(status_code=404, detail="Tournament not found")
 
 
 def set_points(points, id, db: Session):
@@ -105,7 +106,7 @@ def set_points(points, id, db: Session):
         db.refresh(db_player)
         return {"msg": "Points added successfully"}
     else:
-        return {"msg": "Player Not Found"}
+        raise HTTPException(status_code=404, detail="Player not found")
 
 
 def set_place(place, Tid, Pid, db: Session):
@@ -117,7 +118,7 @@ def set_place(place, Tid, Pid, db: Session):
         db.refresh(db_player)
         return {"msg": "Place added successfully"}
     else:
-        return {"msg": "Tournament Not Found"}
+        raise HTTPException(status_code=404, detail="Tournament not found")
 
 
 def get_player_tournaments(id, db: Session):
@@ -140,7 +141,7 @@ def get_player_tournaments(id, db: Session):
         return data
 
     else:
-        return {"msg": "Player Not Found"}
+        raise HTTPException(status_code=404, detail="Player not found")
 
 
 def force_delete_tournament(id, db: Session):
@@ -159,20 +160,20 @@ def force_delete_tournament(id, db: Session):
 
             return {"msg": "Tournament successfully deleted"}
         else:
-            return {"msg": "Tournament Not Found"}
+            raise HTTPException(status_code=404, detail="Tournament not found")
     else:
-        return {"msg": "Tournament players not found"}
+        raise HTTPException(status_code=404, detail="Tournament players not found")
 
 
 def add_player_tournament(Pid, Tid, db: Session):
     player = db.query(models.Players).filter(models.Players.id == Pid).first()
     if not player:
-        return {"msg": "This player does not exist"}
+        raise HTTPException(status_code=404, detail="Player not found")
 
     tournament = db.query(models.Tournament).filter(models.Tournament.id == Tid).first()
 
     if not tournament:
-        return {"msg": "Tournament not found"}
+        raise HTTPException(status_code=404, detail="Tournament not found")
     elif tournament.state == "old":
         return {"msg": "This tournament is already finished"}
 
@@ -180,7 +181,7 @@ def add_player_tournament(Pid, Tid, db: Session):
         (models.TournamentPlayer.Tid == Tid) & (models.TournamentPlayer.Pid == Pid)).first()
 
     if isAlreadyAdded:
-        return {"msg": "This player is already added to this tournament"}
+        raise HTTPException(status_code=409, detail="This player is already added to this tournament")
 
     db_playerTournament = models.TournamentPlayer(Tid=Tid, Pid=Pid, name=player.name, place=0)
     db.add(db_playerTournament)
@@ -192,20 +193,20 @@ def add_player_tournament(Pid, Tid, db: Session):
 def remove_player_tournament(Pid, Tid, db: Session):
     player = db.query(models.Players).filter(models.Players.id == Pid).first()
     if not player:
-        return {"msg": "This player does not exist"}
+        raise HTTPException(status_code=404, detail="Player not found")
 
     tournament = db.query(models.Tournament).filter(models.Tournament.id == Tid).first()
 
     if not tournament:
-        return {"msg": "Tournament not found"}
+        raise HTTPException(status_code=404, detail="Tournament not found")
     elif tournament.state == "old":
-        return {"msg": "This tournament is already finished"}
+        raise HTTPException(status_code=409, detail="This tournament is already finished")
 
     isAlreadyAdded = db.query(models.TournamentPlayer).filter(
         (models.TournamentPlayer.Tid == Tid) & (models.TournamentPlayer.Pid == Pid)).first()
 
     if not isAlreadyAdded:
-        return {"msg": "This player is not in this tournament"}
+        raise HTTPException(status_code=409, detail="This player is not in this tournament")
 
     db.delete(isAlreadyAdded)
     db.commit()
@@ -243,17 +244,17 @@ def get_tournament_recap(Tid, db: Session):
     tournament = db.query(models.Tournament).filter(models.Tournament.id == Tid).first()
 
     if not tournament:
-        return {"msg": "Tournament not found"}
+        raise HTTPException(status_code=404, detail="Tournament not found")
 
     recap = db.query(models.TournamentRecap).filter(models.TournamentRecap.Tid == Tid).first()
 
     if not recap:
-        return {"msg": "Tournament recap not found"}
+        raise HTTPException(status_code=404, detail="Tournament recap not found")
 
     players = db.query(models.TournamentPlayer).filter(models.TournamentPlayer.Tid == Tid).all()
 
     if not players:
-        return {"msg": "There is no players in this tournament"}
+        raise HTTPException(status_code=409, detail="There is no players in this tournament")
 
     return {
         "recap": recap,

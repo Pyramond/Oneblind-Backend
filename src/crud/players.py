@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 import db.models as models
+from fastapi import HTTPException
 
 
 def add_player(name, date, db: Session):
@@ -18,7 +19,7 @@ def change_avatar(id, avatar, db: Session):
         db.refresh(player)
         return {"msg": "Avatar updated successfully"}
     else:
-        return {"msg": "Player not found"}
+        raise HTTPException(status_code=404, detail="Player not found")
 
 
 def remove_player(id, db: Session):
@@ -28,7 +29,7 @@ def remove_player(id, db: Session):
         db.commit()
         return {"msg": "Player deleted successfully"}
     else:
-        return {"msg": "Tournament Not Found"}
+        raise HTTPException(status_code=404, detail="Tournament not found")
 
 
 def get_id_player(id, db: Session):
@@ -43,7 +44,7 @@ def change_avatar_color(id, color, db: Session):
     player = db.query(models.Players).filter(models.Players.id == id).first()
 
     if not player:
-        return {"msg": "Player not found"}
+        raise HTTPException(status_code=404, detail="Player not found")
 
     player.avatarColor = color
     db.commit()
