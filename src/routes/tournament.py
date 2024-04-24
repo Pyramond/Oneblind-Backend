@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
-from database import engine, SessionLocal
-import crud
+from db.database import SessionLocal
+import crud.tournament as crud
 from sqlalchemy.orm import Session
 from schemas.tournament_schema import NewTournament, Tournament, ElPlayer, NewTournamentPlayer, Recap
 

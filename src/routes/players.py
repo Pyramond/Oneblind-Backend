@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
-from database import engine, SessionLocal
-import crud
+from db.database import SessionLocal
+import crud.players as crud
 from sqlalchemy.orm import Session
 from schemas.players_schema import NewPlayer, Player, PlayerAvatar, Color
 from utils.list_avatar import list_avatar
