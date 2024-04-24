@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from database import engine, SessionLocal
 import crud
 from sqlalchemy.orm import Session
-from routes.schemas.blind_schema import NewBlindModel, Model
+from schemas.blind_schema import NewBlindModel, Model
 
 
 router = APIRouter()

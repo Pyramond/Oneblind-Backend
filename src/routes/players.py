@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from database import engine, SessionLocal
 import crud
 from sqlalchemy.orm import Session
-from routes.schemas.players_schema import NewPlayer, Player, PlayerAvatar, Color
+from schemas.players_schema import NewPlayer, Player, PlayerAvatar, Color
 from utils.list_avatar import list_avatar
 
 

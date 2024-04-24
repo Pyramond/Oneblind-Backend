@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from database import engine, SessionLocal
 import crud
 from sqlalchemy.orm import Session
-from routes.schemas.tournament_schema import NewTournament, Tournament, ElPlayer, NewTournamentPlayer, Recap
+from schemas.tournament_schema import NewTournament, Tournament, ElPlayer, NewTournamentPlayer, Recap
 
 
 router = APIRouter()
