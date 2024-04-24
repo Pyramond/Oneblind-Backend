@@ -257,7 +257,6 @@ def force_delete_tournament(id, db: Session):
 
 
 def add_player_tournament(Pid, Tid, db: Session):
-
     player = db.query(models.Players).filter(models.Players.id == Pid).first()
     if not player:
         return {"msg": "This player does not exist"}
@@ -269,11 +268,11 @@ def add_player_tournament(Pid, Tid, db: Session):
     elif tournament.state == "old":
         return {"msg": "This tournament is already finished"}
 
-    isAlreadyAdded = db.query(models.TournamentPlayer).filter((models.TournamentPlayer.Tid == Tid) & (models.TournamentPlayer.Pid == Pid)).first()
+    isAlreadyAdded = db.query(models.TournamentPlayer).filter(
+        (models.TournamentPlayer.Tid == Tid) & (models.TournamentPlayer.Pid == Pid)).first()
 
     if isAlreadyAdded:
         return {"msg": "This player is already added to this tournament"}
-
 
     db_playerTournament = models.TournamentPlayer(Tid=Tid, Pid=Pid, name=player.name, place=0)
     db.add(db_playerTournament)
@@ -283,7 +282,6 @@ def add_player_tournament(Pid, Tid, db: Session):
 
 
 def remove_player_tournament(Pid, Tid, db: Session):
-
     player = db.query(models.Players).filter(models.Players.id == Pid).first()
     if not player:
         return {"msg": "This player does not exist"}
@@ -295,11 +293,11 @@ def remove_player_tournament(Pid, Tid, db: Session):
     elif tournament.state == "old":
         return {"msg": "This tournament is already finished"}
 
-    isAlreadyAdded = db.query(models.TournamentPlayer).filter((models.TournamentPlayer.Tid == Tid) & (models.TournamentPlayer.Pid == Pid)).first()
+    isAlreadyAdded = db.query(models.TournamentPlayer).filter(
+        (models.TournamentPlayer.Tid == Tid) & (models.TournamentPlayer.Pid == Pid)).first()
 
     if not isAlreadyAdded:
         return {"msg": "This player is not in this tournament"}
-
 
     db.delete(isAlreadyAdded)
     db.commit()
@@ -308,7 +306,6 @@ def remove_player_tournament(Pid, Tid, db: Session):
 
 
 def change_avatar_color(id, color, db: Session):
-
     player = db.query(models.Players).filter(models.Players.id == id).first()
 
     if not player:
@@ -318,3 +315,52 @@ def change_avatar_color(id, color, db: Session):
     db.commit()
     db.refresh(player)
     return {"msg": "Color successfully updated"}
+
+
+def create_tournament_recap(Tid, avStack, recaveCounter, start, end, db: Session):
+    recap = db.query(models.TournamentRecap).filter(models.TournamentRecap.Tid == Tid).first()
+
+    if recap:
+
+        recap.avStack = avStack
+        recap.recaveCounter = recaveCounter
+        recap.start = start
+        recap.end = end
+
+        db.commit()
+        db.refresh(recap)
+
+        return {"msg": "Tournament recap successfully updated"}
+
+    else:
+
+        db_recap = models.TournamentRecap(Tid=Tid, avStack=float(avStack), recaveCounter=recaveCounter, start=start,
+                                          end=end)
+        db.add(db_recap)
+        db.commit()
+        db.refresh(db_recap)
+
+        return {"msg": "Tournament recap successfully created"}
+
+
+def get_tournament_recap(Tid, db: Session):
+    tournament = db.query(models.Tournament).filter(models.Tournament.id == Tid).first()
+
+    if not tournament:
+        return {"msg": "Tournament not found"}
+
+    recap = db.query(models.TournamentRecap).filter(models.TournamentRecap.Tid == Tid).first()
+
+    if not recap:
+        return {"msg": "Tournament recap not found"}
+
+    players = db.query(models.TournamentPlayer).filter(models.TournamentPlayer.Tid == Tid).all()
+
+    if not players:
+        return {"msg": "There is no players in this tournament"}
+
+    return {
+        "recap": recap,
+        "players": players,
+        "tournament": tournament
+    }

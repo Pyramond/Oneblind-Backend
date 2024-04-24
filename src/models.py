@@ -48,6 +48,7 @@ class Tournament(Base):
     points = Column(Integer)
 
     players = relationship("TournamentPlayer", back_populates="tournament_owner")
+    recap = relationship("TournamentRecap", back_populates="tournament_owner")
 
 
 class TournamentPlayer(Base):
@@ -60,3 +61,16 @@ class TournamentPlayer(Base):
     place = Column(Integer)
 
     tournament_owner = relationship("Tournament", back_populates="players")
+
+
+class TournamentRecap(Base):
+    __tablename__ = "tournament_recap"
+
+    id = Column(Integer, primary_key=True)
+    Tid = Column(Integer, ForeignKey("tournament_tournament.id"))
+    avStack = Column(Integer)
+    recaveCounter = Column(Integer)
+    start = Column(Integer)
+    end = Column(Integer)
+
+    tournament_owner = relationship("Tournament", back_populates="recap")

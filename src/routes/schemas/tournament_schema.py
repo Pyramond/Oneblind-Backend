@@ -40,3 +40,11 @@ class TournamentPlayer(BaseModel):
 class NewTournamentPlayer(BaseModel):
     Pid: int
     Tid: int
+
+
+class Recap(BaseModel):
+    Tid: int
+    avStack: str
+    recaveCounter: int
+    start: int
+    end: int
