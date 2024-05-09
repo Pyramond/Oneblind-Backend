@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 import db.models as models
-from fastapi import HTTPException
+from fastapi import HTTPException, UploadFile
+from pathlib import Path
 
 
 def add_player(name, date, db: Session):
