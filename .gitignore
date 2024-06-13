@@ -8,5 +8,5 @@ venv
 
 src/__pycache__
 src/routes/__pycache__
-src/routes/schemas/__pycache__
+src/schemas/__pycache__
 
