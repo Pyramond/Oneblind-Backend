@@ -48,3 +48,12 @@ class Recap(BaseModel):
     recaveCounter: int
     start: int
     end: int
+
+
+class UpdateTournament(BaseModel):
+    name: str
+    initialChips: int
+    blindName: str
+    blindId: int
+    points: bool
+    Tid: int

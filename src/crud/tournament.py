@@ -43,7 +43,8 @@ def get_all_tournaments(state, db: Session):
                 "blindName": elt.blindName,
                 "blindId": elt.blindId,
                 "initialChip": elt.initialChip,
-                "state": elt.state
+                "state": elt.state,
+                "points": elt.points
             })
         return tournaments
     elif result is None:
@@ -261,3 +262,21 @@ def get_tournament_recap(Tid, db: Session):
         "players": players,
         "tournament": tournament
     }
+
+
+def update_tournament_infos(Tid, name, points, initialChips, blindName, blindId, db: Session):
+    tournament = db.query(models.Tournament).filter(models.Tournament.id == Tid).first()
+
+    if not tournament:
+        raise HTTPException(status_code=404, detail="Tournament not found")
+
+    tournament.name = name
+    tournament.initialChip = initialChips
+    tournament.points = points
+    tournament.blindName = blindName
+    tournament.blindId = blindId
+
+    db.commit()
+    db.refresh(tournament)
+
+    return {"msg": "Tournaments updated successfully"}

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from db.database import SessionLocal
 import crud.tournament as crud
 from sqlalchemy.orm import Session
-from schemas.tournament_schema import NewTournament, Tournament, ElPlayer, NewTournamentPlayer, Recap
+from schemas.tournament_schema import NewTournament, Tournament, ElPlayer, NewTournamentPlayer, Recap, UpdateTournament
 
 
 router = APIRouter()
@@ -84,3 +84,8 @@ def create_tournament_recap(recap: Recap, db: Session = Depends(get_db)):
 @router.post("/tournament/recap/get")
 def get_tournament_recap(tournament: Tournament, db: Session = Depends(get_db)):
     return crud.get_tournament_recap(tournament.id, db=db)
+
+
+@router.post("/tournament/update")
+def update_tournament(tournamentInfos: UpdateTournament, db: Session = Depends(get_db)):
+    return crud.update_tournament_infos(tournamentInfos.Tid, tournamentInfos.name, tournamentInfos.points, tournamentInfos.initialChips, tournamentInfos.blindName, tournamentInfos.blindId, db=db)
