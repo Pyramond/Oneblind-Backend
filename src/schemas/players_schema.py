@@ -18,3 +18,8 @@ class PlayerAvatar(BaseModel):
 class Color(BaseModel):
     userId: int
     color: str
+
+
+class PlayerName(BaseModel):
+    id: int
+    name: str

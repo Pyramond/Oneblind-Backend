@@ -51,3 +51,16 @@ def change_avatar_color(id, color, db: Session):
     db.commit()
     db.refresh(player)
     return {"msg": "Color successfully updated"}
+
+
+def modify_player_name(id, name, db: Session):
+    player = db.query(models.Players).filter(models.Players.id == id).first()
+
+    if not player:
+        raise HTTPException(status_code=404, detail="Player not found")
+
+    player.name = name
+    db.commit()
+    db.refresh(player)
+
+    return {"msg": "Player's name updated successfully"}

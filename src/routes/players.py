@@ -72,3 +72,8 @@ async def upload_avatar(avatar: UploadFile = File(...), id: int = Form(...), db:
         f.write(contents)
 
     return {"filename": avatar.filename, "msg": "Avatar successfully uploaded"}
+
+
+@router.post("/player/name/update")
+def modifyPlayerName(player: schemas.PlayerName, db: Session = Depends(get_db)):
+    return crud.modify_player_name(player.id, player.name, db=db)
