@@ -1,0 +1,59 @@
+17/07/2024 18:22:58 - GET /player/get_all 'None' 200
+17/07/2024 18:23:02 - GET /player/get_all 'None' 200
+17/07/2024 18:23:08 - POST /player/add 'TEST' 200
+17/07/2024 18:23:08 - GET /player/get_all 'None' 200
+17/07/2024 18:23:11 - DELETE /player/delete '' 200
+17/07/2024 18:23:11 - GET /player/get_all 'None' 200
+17/07/2024 18:25:51 - GET /player/get_all 'None' 200
+17/07/2024 18:26:13 - GET /player/get_all 200
+17/07/2024 18:26:18 - POST /player/add 'TEST' 200
+17/07/2024 18:26:18 - GET /player/get_all 200
+17/07/2024 18:28:46 - GET /player/get_all 200
+17/07/2024 18:28:51 - DELETE /player/delete '' 200
+17/07/2024 18:28:51 - GET /player/get_all 200
+17/07/2024 18:32:20 - POST /player/add 'TEST' 200
+17/07/2024 18:32:20 - GET /player/get_all 200
+17/07/2024 18:32:24 - GET /player/get_all 200
+17/07/2024 18:33:00 - GET /player/get_all 200
+17/07/2024 18:33:03 - GET /player/get_all 200
+17/07/2024 18:33:11 - GET /player/get_all 200
+17/11/2024 00:35:06 - GET /player/get_all 200
+17/11/2024 00:35:12 - GET /player/get_all 200
+17/11/2024 00:35:12 - GET /player/get_all 200
+17/11/2024 00:35:43 - GET /player/get_all 200
+17/11/2024 00:41:07 - GET /player/get_all 200
+17/11/2024 00:41:09 - GET /player/get_all 200
+17/11/2024 00:41:10 - POST /player/get_id '1' 200
+17/11/2024 00:41:10 - GET /player/get_all 200
+17/11/2024 00:41:11 - GET /player/get_all 200
+17/11/2024 00:41:11 - GET /player/get_all 200
+17/11/2024 00:41:11 - POST /player/get_id '1' 200
+17/11/2024 00:41:13 - GET /player/get_all 200
+17/11/2024 00:41:13 - POST /player/get_id '2' 200
+17/11/2024 00:41:13 - POST /player/get_id '3' 200
+17/11/2024 00:41:13 - POST /player/get_id '1' 200
+17/11/2024 00:41:13 - POST /player/get_id '4' 200
+17/11/2024 00:41:13 - POST /player/get_id '5' 200
+17/11/2024 00:41:15 - GET /player/get_all 200
+17/11/2024 00:41:17 - GET /player/get_all 200
+17/11/2024 00:41:19 - GET /player/get_all 200
+17/11/2024 00:41:20 - POST /player/get_id '1' 200
+17/11/2024 00:41:21 - GET /player/get_all 200
+17/11/2024 00:41:22 - GET /player/get_all 200
+17/11/2024 00:41:22 - POST /player/get_id '1' 200
+17/11/2024 00:41:27 - POST /player/name/update '1' 200
+17/11/2024 00:41:27 - GET /player/get_all 200
+17/11/2024 00:41:27 - POST /player/get_id '1' 200
+17/11/2024 16:35:40 - GET /player/get_all 200
+17/11/2024 16:37:54 - GET /player/get_all 200
+17/11/2024 16:37:56 - GET /player/get_all 200
+17/11/2024 16:37:56 - POST /player/get_id '4' 200
+17/11/2024 16:37:56 - POST /player/get_id '5' 200
+17/11/2024 16:37:56 - POST /player/get_id '2' 200
+17/11/2024 16:37:56 - POST /player/get_id '3' 200
+17/11/2024 16:38:00 - GET /player/get_all 200
+17/11/2024 16:38:00 - POST /player/get_id '6' 200
+17/11/2024 16:39:05 - DELETE /player/delete 200
+17/11/2024 16:39:05 - GET /player/get_all 200
+17/11/2024 16:39:06 - GET /player/get_all 200
+17/11/2024 16:39:06 - POST /player/get_id '6' 200

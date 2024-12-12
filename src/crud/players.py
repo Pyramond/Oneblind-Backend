@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
 import db.models as models
-from fastapi import HTTPException, UploadFile
-from pathlib import Path
+from fastapi import HTTPException
 
 
 def add_player(name, date, db: Session):
@@ -30,7 +29,7 @@ def remove_player(id, db: Session):
         db.commit()
         return {"msg": "Player deleted successfully"}
     else:
-        raise HTTPException(status_code=404, detail="Tournament not found")
+        raise HTTPException(status_code=404, detail="Player Not Found")
 
 
 def get_id_player(id, db: Session):

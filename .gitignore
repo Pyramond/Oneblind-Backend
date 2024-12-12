@@ -3,6 +3,7 @@ venv
 *.sqlite
 *.db
 
+src/static/logs.txt
 
 # Pycache
 
