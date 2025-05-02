@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from routes import players, blind_models, tournament, database
+from routes import players, blind_models, tournament, database, chips
 from db import models
 from db.database import engine
 
@@ -25,3 +25,4 @@ app.include_router(players.router)
 app.include_router(blind_models.router)
 app.include_router(tournament.router)
 app.include_router(database.router)
+app.include_router(chips.router)
