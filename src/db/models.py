@@ -74,3 +74,11 @@ class TournamentRecap(Base):
     end = Column(BigInteger)
 
     tournament_owner = relationship("Tournament", back_populates="recap")
+
+
+class Chip(Base):
+    __tablename__ = "chip"
+
+    id = Column(Integer, primary_key=True)
+    color = Column(String)
+    value = Column(Integer)
