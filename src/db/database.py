@@ -6,9 +6,7 @@ from os import getenv
 
 load_dotenv()
 
-db_pass = getenv("DB_PASSWORD")
-
-SQLALCHEMY_DATABASE_URL = f"postgresql://postgres:{db_pass}@db.hywkfqrxeuthzeaoywgt.supabase.co:5432/postgres"
+SQLALCHEMY_DATABASE_URL = getenv("DB_URL")
 
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
