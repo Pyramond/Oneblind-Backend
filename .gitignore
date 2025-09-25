@@ -2,11 +2,11 @@ venv
 .idea
 *.sqlite
 *.db
-
+.env
 
 # Pycache
 
 src/__pycache__
 src/routes/__pycache__
 src/schemas/__pycache__
-
+src/db/__pycache__

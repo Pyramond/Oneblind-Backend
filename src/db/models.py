@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, BigInteger
 from sqlalchemy.orm import relationship
 from db.database import Base
 
@@ -8,7 +8,7 @@ class Players(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    date = Column(Integer)
+    date = Column(BigInteger)
     points = Column(Integer)
     avatar = Column(Integer)
     avatarColor = Column(String)
@@ -40,7 +40,7 @@ class Tournament(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    date = Column(Integer)
+    date = Column(BigInteger)
     blindName = Column(String)
     blindId = Column(Integer)
     initialChip = Column(Integer)
@@ -70,7 +70,7 @@ class TournamentRecap(Base):
     Tid = Column(Integer, ForeignKey("tournament_tournament.id"))
     avStack = Column(Integer)
     recaveCounter = Column(Integer)
-    start = Column(Integer)
-    end = Column(Integer)
+    start = Column(BigInteger)
+    end = Column(BigInteger)
 
     tournament_owner = relationship("Tournament", back_populates="recap")
